@@ -1,0 +1,23 @@
+{
+  "name": "photo-dealer",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/mitsuhiroseino/photo-dealer.git",
+  "author": "Mitsuhiro Seino",
+  "license": "MIT",
+  "devDependencies": {
+    "nexe": "^4.0.0-beta.19"
+  },
+  "dependencies": {
+    "exifr": "^6.0.0",
+    "fs-extra": "^9.0.1",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "stencil": "^0.0.5",
+    "yargs": "^17.2.1"
+  },
+  "scripts": {
+    "nexe": "./node_modules/.bin/nexe",
+    "deal": "node ./src/index.js"
+  }
+}
