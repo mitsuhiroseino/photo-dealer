@@ -2,7 +2,6 @@ console.info("処理を開始します");
 
 const fs = require("fs-extra"),
   moment = require("moment"),
-  exifr = require("exifr"),
   _ = require("lodash");
 
 const args = process.argv,
@@ -45,7 +44,7 @@ const moveFile = (fromFilePath, to, file, created) => {
   }
 
   // 移動する
-  console.log(`${fromFilePath} -> ${toFilePath}`);
+  console.info(`${fromFilePath} -> ${toFilePath}`);
   fs.moveSync(fromFilePath, toFilePath);
   return toFilePath;
 };
@@ -56,17 +55,7 @@ const promises = files.map((file) => {
   const fromFilePath = `${from}\\${file}`;
   const fileInfo = fs.statSync(fromFilePath);
   if (fileInfo.isFile()) {
-    return exifr
-      .parse(fromFilePath)
-      .then((output) => {
-        // 撮影日時でフォルダへ移動
-        return moveFile(fromFilePath, to, file, output.DateTimeOriginal);
-      })
-      .catch(() => {
-        // ファイル作成日時でフォルダへ移動
-        const fileInfo = fs.statSync(fromFilePath);
-        return moveFile(fromFilePath, to, file, fileInfo.birthtime);
-      });
+    return moveFile(fromFilePath, to, file, fileInfo.birthtime);
   } else {
     return Promise.resolve();
   }
